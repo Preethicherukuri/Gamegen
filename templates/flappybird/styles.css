@@ -1,1 +1,154 @@
+/* General styles */
+body {
+  margin: 0;
+  overflow: hidden;
+  background: linear-gradient(to bottom, #87ceeb, #e0f7fa);
+  font-family: 'Segoe UI', sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  position: relative;
+}
+
+/* Game canvas full-screen */
+canvas#gameCanvas {
+  display: block;
+  width: 100vw;
+  height: 100vh;
+  background-color: #70c5ce;
+}
+
+/* Difficulty Buttons */
+#difficultyButtons {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  gap: 20px;
+  z-index: 2;
+}
+
+#difficultyButtons button {
+  padding: 15px 30px;
+  font-size: 20px;
+  font-weight: bold;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  background-color: #fff176;
+  color: #333;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s ease, background-color 0.3s ease;
+}
+
+#difficultyButtons button:hover {
+  background-color: #ffd54f;
+  transform: scale(1.05);
+}
+
+/* Start Message */
+#startMessage {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 28px;
+  font-weight: bold;
+  color: white;
+  background: rgba(0, 0, 0, 0.4);
+  padding: 20px 30px;
+  border-radius: 10px;
+  display: none;
+  z-index: 2;
+}
+
+/* Score Display */
+#scoreDisplay {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  font-size: 24px;
+  font-weight: bold;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.35);
+  padding: 10px 20px;
+  border-radius: 10px;
+  z-index: 2;
+}
+
+/* Game Over Screen */
+#gameOverScreen {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 12px;
+  padding: 30px 40px;
+  text-align: center;
+  display: none;
+  z-index: 3;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+#gameOverScreen h2 {
+  margin-bottom: 15px;
+  color: #d32f2f;
+  font-size: 30px;
+}
+
+#gameOverScreen p {
+  font-size: 22px;
+  margin-bottom: 20px;
+}
+
+#gameOverScreen button {
+  margin: 0 10px;
+  padding: 12px 24px;
+  font-size: 18px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  background-color: #81c784;
+  color: white;
+  transition: background-color 0.3s ease;
+}
+
+#gameOverScreen button:hover {
+  background-color: #66bb6a;
+}
+
+/* Score & Pause Container */
+#scoreContainer {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  z-index: 3;
+}
+
+/* Score Display */
+#scoreDisplay {
+  font-size: 26px;
+  font-weight: bold;
+  color: white;
+  text-shadow: 2px 2px 5px #000;
+  background: rgba(0, 0, 0, 0.4);
+  padding: 8px 16px;
+  border-radius: 12px;
+  white-space: nowrap; 
+}
+
+#bird {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  pointer-events: none;
+}
+
+
 
