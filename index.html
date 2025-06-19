@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GameGen - No Code Game Tool</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="homeScreen" class="container">
+    <h1 class="title">🎮 GameGen</h1>
+    <p class="subtitle">Choose a Game to Start Playing</p>
+    <div class="button-group">
+      <button onclick="loadGame('flappybird')">🕊️ Flappy Bird</button>
+      <button onclick="loadGame('speedrunner')">Speed Runner</button>
+      <button onclick="loadGame('whackthemole')">Whack The Mole</button>
+      <button onclick="loadGame('crossroad')">Cross Road</button>
+      <button onclick="loadGame('simplematch3')">Simple Match 3</button>
+    </div>
+  </div>
+
+  <div id="gameScreen" class="fullscreen hidden">
+    <iframe id="gameFrame" allowfullscreen></iframe>
+    <button class="back-btn" onclick="goHome()">⬅ Home</button>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
