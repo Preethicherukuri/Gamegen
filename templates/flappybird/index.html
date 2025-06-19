@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Flappy Bird</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="difficultyButtons">
+    <button onclick="setDifficulty('easy')">Easy</button>
+    <button onclick="setDifficulty('medium')">Medium</button>
+    <button onclick="setDifficulty('hard')">Hard</button>
+  </div>
+
+  <div id="startMessage">🕹️ Press any key to start</div>
+
+  <canvas id="gameCanvas"></canvas>
+
+  <div id="scoreContainer">
+    <div id="scoreDisplay">Score: 0</div>
+  </div>
+
+  <div id="gameOverScreen">
+    <div class="game-over-box">
+      <h2>💥 Game Over!</h2>
+      <p id="finalScore">Score: 0</p>
+      <div class="buttons">
+        <button onclick="restartGame()">🔁 Restart</button>
+        <button onclick="goHome()">🏠 Home</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const canvas = document.getElementById("gameCanvas");
+    const ctx = canvas.getContext("2d");
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const birdImg = new Image();
+    birdImg.src = "assets/bird.png";
+
+    let birdX = canvas.width / 2 - 50;
+    let birdY = canvas.height / 2;
+    let velocity = 0;
+    let gravity = 0;
+    let jump = 0;
+    let birdSize = 60;
+
+    let pipes = [];
+    let frameCount = 0;
+    let gameOver = false;
+    let gameStarted = false;
+    let difficultySelected = false;
+    let score = 0;
+    let paused = false;
+
+    // ☁️ Cloud setup
+    let clouds = [];
+    for (let i = 0; i < 5; i++) {
+      clouds.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height / 2,
+        radius: 20 + Math.random() * 30,
+        speed: 0.2 + Math.random() * 0.3
+      });
+    }
+
+    function drawClouds() {
+      ctx.fillStyle = "white";
+      clouds.forEach(cloud => {
+        ctx.beginPath();
+        ctx.arc(cloud.x, cloud.y, cloud.radius, 0, Math.PI * 2);
+        ctx.arc(cloud.x + cloud.radius * 0.6, cloud.y - 10, cloud.radius * 0.9, 0, Math.PI * 2);
+        ctx.arc(cloud.x + cloud.radius * 1.2, cloud.y, cloud.radius * 0.8, 0, Math.PI * 2);
+        ctx.closePath();
+        ctx.fill();
+
+        cloud.x -= cloud.speed;
+        if (cloud.x + cloud.radius * 2 < 0) {
+          cloud.x = canvas.width + 100;
+          cloud.y = Math.random() * canvas.height / 2;
+        }
+      });
+    }
+
+    function drawBird() {
+      ctx.drawImage(birdImg, birdX - birdSize / 2, birdY - birdSize / 2, birdSize, birdSize);
+    }
+
+    function drawPipes() {
+      ctx.fillStyle = "green";
+      pipes.forEach(pipe => {
+        ctx.fillRect(pipe.x, 0, 50, pipe.top);
+        ctx.fillRect(pipe.x, pipe.bottom, 50, canvas.height - pipe.bottom);
+      });
+    }
+
+    function drawStartMessage() {
+      ctx.fillStyle = "white";
+      ctx.font = "32px sans-serif";
+      ctx.textAlign = "center";
+      ctx.fillText("Press any key to start", canvas.width / 2, canvas.height / 2);
+    }
+
+    function update() {
+      if (!gameStarted || gameOver || paused) return;
+
+      velocity += gravity;
+      birdY += velocity;
+
+      frameCount++;
+      if (frameCount % 90 === 0) {
+        let topHeight = Math.random() * (canvas.height / 2) + 50;
+        pipes.push({
+          x: canvas.width,
+          top: topHeight,
+          bottom: topHeight + 120,
+          passed: false
+        });
+      }
+
+      pipes.forEach(pipe => {
+        pipe.x -= 2;
+
+        // Relaxed collision using buffer
+        const buffer = 14;
+        const birdLeft = birdX - birdSize / 2 + buffer;
+        const birdRight = birdX + birdSize / 2 - buffer;
+        const birdTop = birdY - birdSize / 2 + buffer;
+        const birdBottom = birdY + birdSize / 2 - buffer;
+
+        const pipeLeft = pipe.x;
+        const pipeRight = pipe.x + 50;
+
+        if (
+          birdRight > pipeLeft &&
+          birdLeft < pipeRight &&
+          (birdTop < pipe.top || birdBottom > pipe.bottom)
+        ) {
+          endGame();
+        }
+
+        if (!pipe.passed && pipe.x + 50 < birdX) {
+          pipe.passed = true;
+          score++;
+          document.getElementById("scoreDisplay").textContent = `Score: ${score}`;
+        }
+      });
+
+      if (birdY > canvas.height || birdY < 0) {
+        endGame();
+      }
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      drawClouds(); // ☁️ cloud background
+      drawBird();
+      drawPipes();
+      if (!gameStarted && !gameOver && difficultySelected) {
+        drawStartMessage();
+      }
+    }
+
+    function loop() {
+      update();
+      draw();
+      if (!gameOver && !paused) requestAnimationFrame(loop);
+    }
+
+    function endGame() {
+      gameOver = true;
+      document.getElementById("finalScore").textContent = `Score: ${score}`;
+      document.getElementById("gameOverScreen").style.display = "flex";
+    }
+
+    function restartGame() {
+      location.reload();
+    }
+
+    function goHome() {
+      window.parent.location.reload();
+    }
+
+    function setDifficulty(level) {
+      switch (level) {
+        case "easy": gravity = 0.25; jump = -4.5; break;
+        case "medium": gravity = 0.35; jump = -6; break;
+        case "hard": gravity = 0.45; jump = -7; break;
+      }
+      difficultySelected = true;
+      document.getElementById("difficultyButtons").style.display = "none";
+      document.getElementById("startMessage").style.display = "block";
+    }
+
+    function togglePause() {
+      paused = !paused;
+      if (!paused && gameStarted) loop();
+    }
+
+    document.addEventListener("keydown", (e) => {
+      if (e.code === "Escape") {
+        togglePause();
+        return;
+      }
+      if (!gameStarted && difficultySelected) {
+        gameStarted = true;
+        document.getElementById("startMessage").style.display = "none";
+        loop();
+      }
+      if (difficultySelected && !paused) {
+        velocity = jump;
+      }
+    });
+
+    draw();
+  </script>
+</body>
+</html>
+
