@@ -2,13 +2,13 @@
 body {
   margin: 0;
   overflow: hidden;
-  background: linear-gradient(to bottom, #87ceeb, #e0f7fa);
   font-family: 'Segoe UI', sans-serif;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
   position: relative;
+  background: linear-gradient(to bottom, #1e3c72, #2a5298);
 }
 
 /* Game canvas full-screen */
@@ -16,7 +16,32 @@ canvas#gameCanvas {
   display: block;
   width: 100vw;
   height: 100vh;
-  background-color: #70c5ce;
+}
+
+/* Season Buttons */
+#seasonButtons {
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 10px;
+  z-index: 3;
+}
+
+#seasonButtons button {
+  padding: 10px 20px;
+  font-size: 18px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  background-color: #4fc3f7;
+  color: #fff;
+  transition: background-color 0.3s ease;
+}
+
+#seasonButtons button:hover {
+  background-color: #039be5;
 }
 
 /* Difficulty Buttons */
@@ -69,12 +94,14 @@ canvas#gameCanvas {
   position: absolute;
   top: 20px;
   right: 30px;
-  font-size: 24px;
+  font-size: 26px;
   font-weight: bold;
-  color: #fff;
-  background: rgba(0, 0, 0, 0.35);
-  padding: 10px 20px;
-  border-radius: 10px;
+  color: white;
+  text-shadow: 2px 2px 5px #000;
+  background: rgba(0, 0, 0, 0.4);
+  padding: 8px 16px;
+  border-radius: 12px;
+  white-space: nowrap; 
   z-index: 2;
 }
 
@@ -131,18 +158,6 @@ canvas#gameCanvas {
   z-index: 3;
 }
 
-/* Score Display */
-#scoreDisplay {
-  font-size: 26px;
-  font-weight: bold;
-  color: white;
-  text-shadow: 2px 2px 5px #000;
-  background: rgba(0, 0, 0, 0.4);
-  padding: 8px 16px;
-  border-radius: 12px;
-  white-space: nowrap; 
-}
-
 #bird {
   position: absolute;
   width: 40px;
@@ -150,5 +165,33 @@ canvas#gameCanvas {
   pointer-events: none;
 }
 
+/* Season Backgrounds */
+body.summer canvas#gameCanvas {
+  background-color: #70c5ce;
+}
 
+body.spring canvas#gameCanvas {
+  background-color: #c8e6c9;
+}
 
+body.monsoon canvas#gameCanvas {
+  background-color: #455a64;
+}
+
+body.winter canvas#gameCanvas {
+  background-color: #e0f7fa;
+}
+
+#seasonButtons,
+#difficultyButtons {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  gap: 20px;
+  z-index: 3;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+/* Optional animations can be added for clouds, rain, snow etc. in canvas via JS */
