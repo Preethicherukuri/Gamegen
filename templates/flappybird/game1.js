@@ -3,8 +3,24 @@ const ctx = canvas.getContext("2d");
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
-const birdImg = new Image();
-birdImg.src = "assets/bird.png";
+const uiBgImg = new Image();
+uiBgImg.src = "assets/backgrounds/select.jpg"; // make sure path is correct
+uiBgImg.onload = () => {
+  draw(); // only call draw after image is fully loaded
+};
+
+const birdImg1 = new Image();
+birdImg1.src = "assets/bird1.png"; // default idle
+
+const birdImg2 = new Image();
+birdImg2.src = "assets/bird2.png"; // flapping frame
+
+let currentBirdImg = birdImg1;
+let birdWidth = 35;   // slimmed width
+let birdHeight = 55;  // keep original height if okay
+
+let flapTimeout = null;
+
 
 // Sound Effects
 const sounds = {
@@ -14,6 +30,24 @@ const sounds = {
   hit: new Audio("assets/sounds/hit.mp3"),
   score: new Audio("assets/sounds/score.mp3")
 };
+
+const summerBgImg = new Image();
+summerBgImg.src = "assets/backgrounds/summer.jpg";
+let summerBgX = 0;
+
+const springBgImg = new Image();
+springBgImg.src = "assets/backgrounds/spring.png";
+let springBgX = 0;
+
+const monsoonBgImg = new Image();
+monsoonBgImg.src = "assets/backgrounds/rainy.png";
+let monsoonBgX = 0;
+
+const winterBgImg = new Image();
+winterBgImg.src = "assets/backgrounds/winter.png";
+let winterBgX = 0;
+
+
 
 function playSound(name) {
   const sound = sounds[name];
@@ -68,8 +102,8 @@ function selectSeason(selectedSeason) {
 function drawSeasonBackground() {
   if (!season) {
     const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
-    gradient.addColorStop(0, "#1e3c72");
-    gradient.addColorStop(1, "#2a5298");
+    gradient.addColorStop(0, "#ff416c");
+    gradient.addColorStop(1, "#ff4b2b");
     ctx.fillStyle = gradient;
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     return;
@@ -77,56 +111,31 @@ function drawSeasonBackground() {
 
   switch (season) {
     case 'summer':
-      ctx.fillStyle = '#87ceeb';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-      ctx.beginPath();
-      ctx.fillStyle = 'yellow';
-      ctx.arc(canvas.width - 100, 100, 50, 0, Math.PI * 2);
-      ctx.fill();
-      clouds.forEach(cloud => {
-        ctx.fillStyle = 'white';
-        ctx.beginPath();
-        ctx.ellipse(cloud.x, cloud.y, 30, 20, 0, 0, Math.PI * 2);
-        ctx.ellipse(cloud.x + 30, cloud.y + 10, 35, 25, 0, 0, Math.PI * 2);
-        ctx.ellipse(cloud.x + 60, cloud.y, 30, 20, 0, 0, Math.PI * 2);
-        ctx.fill();
-        cloud.x -= 0.5;
-        if (cloud.x + 90 < 0) {
-          cloud.x = canvas.width + Math.random() * 100;
-          cloud.y = Math.random() * (canvas.height / 3);
-        }
-      });
+      summerBgX -= 1;
+      if (summerBgX <= -canvas.width) {
+        summerBgX = 0;
+      }
+      ctx.drawImage(summerBgImg, summerBgX, 0, canvas.width, canvas.height);
+      ctx.drawImage(summerBgImg, summerBgX + canvas.width, 0, canvas.width, canvas.height);
+      drawSun(ctx);
       break;
 
     case 'spring':
-      ctx.fillStyle = '#b3f0ff';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-      flowers.forEach(tree => {
-        ctx.fillStyle = "#8B4513";
-        ctx.fillRect(tree.x, tree.y, 14, 60);
-        ctx.fillStyle = "#4CAF50";
-        ctx.beginPath(); ctx.arc(tree.x + 7, tree.y - 20, 25, 0, Math.PI * 2); ctx.fill();
-        ctx.beginPath(); ctx.arc(tree.x - 3, tree.y - 15, 20, 0, Math.PI * 2); ctx.fill();
-        ctx.beginPath(); ctx.arc(tree.x + 23, tree.y - 15, 20, 0, Math.PI * 2); ctx.fill();
-        ctx.beginPath(); ctx.arc(tree.x + 7, tree.y - 40, 18, 0, Math.PI * 2); ctx.fill();
-
-        tree.flowerPositions.forEach(pos => {
-          const fx = tree.x + 7 + Math.cos(pos.angle) * pos.radius;
-          const fy = tree.y - 20 + Math.sin(pos.angle) * (pos.radius * 0.75);
-          ctx.beginPath();
-          ctx.fillStyle = "pink";
-          ctx.arc(fx, fy, 3.5, 0, Math.PI * 2);
-          ctx.fill();
-        });
-
-        tree.x -= 1;
-        if (tree.x < -60) tree.x = canvas.width + Math.random() * 100;
-      });
+      springBgX -= 1;
+      if (springBgX <= -canvas.width) {
+        springBgX = 0;
+      }
+      ctx.drawImage(springBgImg, springBgX, 0, canvas.width, canvas.height);
+      ctx.drawImage(springBgImg, springBgX + canvas.width, 0, canvas.width, canvas.height);
       break;
 
     case 'monsoon':
-      ctx.fillStyle = '#455a64';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      monsoonBgX -= 1;
+      if (monsoonBgX <= -canvas.width) {
+        monsoonBgX = 0;
+      }
+      ctx.drawImage(monsoonBgImg, monsoonBgX, 0, canvas.width, canvas.height);
+      ctx.drawImage(monsoonBgImg, monsoonBgX + canvas.width, 0, canvas.width, canvas.height);
       ctx.strokeStyle = '#90caf9';
       rainDrops.forEach(drop => {
         ctx.beginPath();
@@ -143,34 +152,56 @@ function drawSeasonBackground() {
       break;
 
     case 'winter':
-      ctx.fillStyle = '#e0f7fa';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-      ctx.fillStyle = '#fff';
-      snowflakes.forEach(snow => {
-        ctx.beginPath();
-        ctx.arc(snow.x, snow.y, 3, 0, Math.PI * 2);
-        ctx.fill();
-        snow.y += snow.speed;
-        if (snow.y > canvas.height) {
-          snow.y = 0;
-          snow.x = Math.random() * canvas.width;
-        }
-      });
+      winterBgX -= 1;
+      if (winterBgX <= -canvas.width) {
+        winterBgX = 0;
+      }
+      ctx.drawImage(winterBgImg, winterBgX, 0, canvas.width, canvas.height);
+      ctx.drawImage(winterBgImg, winterBgX + canvas.width, 0, canvas.width, canvas.height);
       break;
   }
 }
 
-function drawBird() {
-  ctx.drawImage(birdImg, birdX - birdSize / 2, birdY - birdSize / 2, birdSize, birdSize);
+function drawSun(ctx) {
+  ctx.beginPath();
+  ctx.fillStyle = 'yellow';
+  ctx.arc(canvas.width - 100, 100, 50, 0, Math.PI * 2);
+  ctx.fill();
 }
 
+function drawBird() {
+  ctx.drawImage(currentBirdImg, birdX - birdWidth / 2, birdY - birdHeight / 2, birdWidth, birdHeight);
+}
+
+
+
 function drawPipes() {
-  ctx.fillStyle = "green";
   pipes.forEach(pipe => {
+    switch (season) {
+      case 'summer':
+        ctx.fillStyle = "#a0522d"; // brownish red
+        break;
+      case 'spring':
+        ctx.fillStyle = "#4caf50"; // fresh green
+        break;
+      case 'winter':
+        ctx.fillStyle = "#81d4fa"; // icy blue
+        break;
+      case 'monsoon':
+        ctx.fillStyle = "#263238"; // deep black
+        break;
+      default:
+        ctx.fillStyle = "green";
+    }
+
+    // Draw top and bottom pipe rectangles
     ctx.fillRect(pipe.x, 0, 50, pipe.top);
     ctx.fillRect(pipe.x, pipe.bottom, 50, canvas.height - pipe.bottom);
+
+    
   });
 }
+
 
 function update() {
   if (!gameStarted || gameOver || paused) return;
@@ -224,7 +255,15 @@ function update() {
 
 function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  drawSeasonBackground();
+
+  // Draw background depending on state
+  if (!gameStarted) {
+    // If UI background exists, draw it during menu states
+    ctx.drawImage(uiBgImg, 0, 0, canvas.width, canvas.height);
+  } else {
+    drawSeasonBackground();
+  }
+
   drawBird();
   drawPipes();
 
@@ -235,6 +274,7 @@ function draw() {
     ctx.fillText("Press any key to start", canvas.width / 2, canvas.height / 2);
   }
 }
+
 
 function loop() {
   update();
@@ -274,15 +314,26 @@ function togglePause() {
 
 document.addEventListener("keydown", (e) => {
   if (e.code === "Escape") return togglePause();
+
   if (!gameStarted && difficultySelected) {
     gameStarted = true;
     document.getElementById("startMessage").style.display = "none";
     loop();
   }
+
   if (difficultySelected && !paused) {
     velocity = jump;
     playSound("flap");
+
+    // Show flapping bird briefly
+    currentBirdImg = birdImg2;
+    clearTimeout(flapTimeout);
+    flapTimeout = setTimeout(() => {
+      currentBirdImg = birdImg1;
+    }, 100); // 100ms flap
   }
 });
+
+
 
 draw();

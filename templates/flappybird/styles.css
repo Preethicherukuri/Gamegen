@@ -32,16 +32,18 @@ canvas#gameCanvas {
 #seasonButtons button {
   padding: 10px 20px;
   font-size: 18px;
+  font-weight: bold;
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  background-color: #4fc3f7;
-  color: #fff;
+  background-color: #fff176;
+  color: #333;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   transition: background-color 0.3s ease;
 }
 
 #seasonButtons button:hover {
-  background-color: #039be5;
+  background-color: #ffd54f;
 }
 
 /* Difficulty Buttons */
