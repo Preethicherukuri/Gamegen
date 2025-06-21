@@ -1,0 +1,390 @@
+/* General Styling */
+body {
+  font-family: 'Orbitron', 'Comic Sans MS', cursive;
+  background: linear-gradient(to bottom, #ade8f4, #caf0f8);
+  background-attachment: fixed;
+  background-size: cover;
+  background-repeat: no-repeat;
+  text-align: center;
+  margin: 0;
+  padding: 20px;
+  transition: background-image 0.5s ease-in-out;
+  cursor: default;
+}
+
+body.hammer-active {
+  cursor: url('images/hammer.png') 30 30, auto;
+}
+
+h1 {
+  font-size: 3rem;
+  color: #fdfdfd;
+  text-shadow: 2px 2px 4px #000;
+  margin-bottom: 20px;
+}
+
+/* Initially Hide Game UI */
+#scoreboard,
+#gameArea,
+#startBtn,
+#restartBtn {
+  display: none;
+}
+
+/* Planet Selection */
+.planet-selector {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: 20px auto;
+  gap: 10px;
+  max-width: 600px;
+}
+
+.planet-button {
+  padding: 12px 20px;
+  border: none;
+  border-radius: 20px;
+  background: linear-gradient(to right, #48cae4, #00b4d8);
+  color: white;
+  font-size: 1.1rem;
+  cursor: pointer;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.4);
+  transition: transform 0.2s ease;
+}
+
+.planet-button:hover {
+  transform: scale(1.1);
+}
+
+.planet-button.locked {
+  background: #adb5bd;
+  cursor: not-allowed;
+}
+
+/* Flash effect for newly unlocked planet */
+@keyframes unlockFlash {
+  0%, 100% { background-color: #48cae4; }
+  50% { background-color: #ffea00; color: #000; }
+}
+
+.planet-button.unlock-animated {
+  animation: unlockFlash 1s ease-in-out;
+}
+
+/* Scoreboard */
+.scoreboard {
+  position: absolute;
+  top: 10px;
+  left: 0;
+  right: 0;
+  height: auto;
+  width: 100%;
+  z-index: 100;
+  pointer-events: none; /* so it doesn't block buttons behind */
+}
+
+.score-item {
+  position: absolute;
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  padding: 8px 14px;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  box-shadow: 0 0 6px rgba(0,0,0,0.3);
+  pointer-events: auto; /* allow interaction if needed */
+}
+
+/* Place items at specific horizontal points */
+.score-item.planet {
+  left: 10%;
+}
+
+.score-item.level {
+  left: 30%;
+}
+
+.score-item.score {
+  right: 30%;
+}
+
+.score-item.time {
+  right: 10%;
+}
+
+/* Game Grid */
+.game {
+  display: grid;
+  gap: 15px;
+  justify-content: center;
+  align-content: center;
+  grid-template-columns: repeat(auto-fit, 100px);
+  height: calc(100vh - 160px); /* minus top bar height */
+  padding: 20px;
+}
+
+
+
+/* Hole + Mole Styling */
+.hole {
+  width: 100px;
+  height: 100px;
+  background: #03045e;
+  border-radius: 50%;
+  overflow: hidden;
+  position: relative;
+  box-shadow: inset 0 0 10px #0096c7;
+}
+
+.mole {
+  width: 100px;
+  height: 90px;
+  background: url('images/mole1.png') center/contain no-repeat;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translate(-50%, 100%); /* fully hidden below */
+  transition: transform 0.3s;
+  cursor: inherit !important;
+  pointer-events: auto;
+}
+
+
+.hole.up .mole {
+  transform: translate(-50%, +10%); /* pop up */
+}
+
+.mole.hit {
+  background: url('images/mole2.png') center bottom / contain no-repeat;
+}
+
+/* Buttons */
+button {
+  margin: 10px;
+  padding: 12px 24px;
+  background: linear-gradient(to right, #023e8a, #0077b6);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  transform: scale(1.05);
+  background: linear-gradient(to right, #0096c7, #00b4d8);
+}
+
+/* Modal */
+.modal.hidden {
+  display: none;
+}
+
+.modal {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+}
+
+.modal-content {
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  text-align: center;
+}
+
+/* Overlay for Planet & Level Selection */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  color: white;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.planet-bg {
+  background-size: cover;
+  background-position: center;
+  padding: 20px;
+  text-align: center;
+  width: 100%;
+}
+
+/* Level & Goal Message Screens */
+.level-selector,
+.goal-screen {
+  text-align: center;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 15px;
+  box-shadow: 0 0 8px rgba(255,255,255,0.3);
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* Level Buttons */
+#levelButtons button {
+  margin: 8px;
+  padding: 10px 15px;
+  border-radius: 8px;
+  background-color: #0077b6;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.2s;
+}
+
+#levelButtons button:hover {
+  background-color: #00b4d8;
+}
+
+#levelButtons button:disabled {
+  background-color: #6c757d;
+  color: #ccc;
+  cursor: not-allowed;
+  opacity: 0.25;
+}
+
+/* End Screen */
+#endScreen {
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.9);
+  z-index: 1100;
+  color: white;
+  text-align: center;
+  padding: 30px;
+}
+
+#endScreen.hidden {
+  display: none !important;
+}
+
+#endScreen h2 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+#endScreen button {
+  font-size: 1.1rem;
+  margin: 10px 8px;
+  padding: 10px 20px;
+  border-radius: 10px;
+}
+
+/* Responsive Layout */
+@media (max-width: 600px) {
+  .scoreboard {
+    flex-direction: column;
+    gap: 10px;
+    font-size: 1rem;
+  }
+
+  .planet-selector {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .game {
+    grid-template-columns: repeat(auto-fit, 80px);
+    cursor: url('images/hammer.png') 10 10, auto;
+  }
+
+  .hole {
+    width: 80px;
+    height: 80px;
+    cursor: inherit !important;
+  pointer-events: auto;
+  }
+
+  .mole {
+    width: 60px;
+    height: 60px;
+  }
+}
+
+#levelButtons .unlocked-level {
+  background-color: #0077b6;
+  color: white;
+}
+
+#levelButtons .locked-level {
+  background-color: #555;
+  color: #ccc;
+  cursor: not-allowed;
+}
+
+.end-buttons {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+#endScreen button {
+  min-width: 140px;
+  padding: 12px 24px;
+  font-size: 1.1rem;
+  background: linear-gradient(to right, #6a11cb, #2575fc);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+  transition: transform 0.2s ease, background 0.3s ease;
+}
+
+#endScreen button:hover {
+  transform: scale(1.07);
+  background: linear-gradient(to right, #2575fc, #6a11cb);
+}
+
+#endScreen h2 {
+  font-size: 2rem;
+  margin-bottom: 30px;
+  color: #ffffff;
+  text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+  display: inline-block;
+}
+
+.modal-content {
+  background: skyblue;
+  padding: 30px;
+  border-radius: 12px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.end-buttons {
+  flex-direction: column;
+  gap: 12px;
+}
+
+#endScreen button {
+  width: 100%;
+  max-width: 90%;
+}
+
+.modal,
+.overlay {
+  cursor: default !important;
+}

@@ -1,1 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Whack-a-Mole: Planet Quest</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
+</head>
+<body>
+  <h1 id="gameTitle">🪐 Whack-a-Mole: Planet Quest</h1>
 
+
+  <!-- Overlay for Planet, Level, Goal -->
+  <div id="overlay" class="overlay">
+    <div class="planet-bg" id="planetBg">
+      <h2 class="planet-heading">Select Your Planet</h2>
+
+      <div class="planet-selector" id="planetSelector"></div>
+    </div>
+
+    <div class="level-selector hidden" id="levelSelector">
+      <h2>Select Level</h2>
+      <div id="levelButtons"></div>
+    </div>
+
+    <div class="goal-screen hidden" id="goalScreen">
+      <h2 id="goalText">Hit X moles in 30 seconds!</h2>
+      <p>Press any key to start.</p>
+    </div>
+  </div>
+
+  <!-- Game UI -->
+<div class="scoreboard" id="scoreboard">
+  <div class="score-item planet">Planet: <strong id="planetName">Mercury</strong></div>
+  <div class="score-item level">Level: <strong id="levelNumber">1</strong></div>
+  <div class="score-item score">Score: <strong id="score">0</strong></div>
+  <div class="score-item time">Time: <strong id="time">30</strong>s</div>
+</div>
+
+
+
+  <div class="game" id="gameArea"></div>
+
+  <button id="startBtn">Start Level</button>
+  <button id="restartBtn">Restart Game</button>
+
+  <!-- Confirm Restart Modal -->
+  <div id="confirmModal" class="modal hidden">
+    <div class="modal-content">
+      <p>Are you sure you want to reset your progress?</p>
+      <button id="confirmRestart">Yes, Restart</button>
+      <button id="cancelRestart">Cancel</button>
+    </div>
+  </div>
+
+<!-- End Screen after game -->
+<div id="endScreen" class="modal hidden">
+  <div class="modal-content">
+    <h2 id="endMessage">Time's up!</h2>
+    <div class="end-buttons">
+      <button id="tryAgainBtn">🔁 Try Again</button>
+      <button id="nextLevelBtn" class="hidden">⏭️ Next Level</button>
+      <button id="restartBtnFinal">🔄 Restart</button>
+      <button id="homeBtn">🏠 Home</button>
+    </div>
+  </div>
+</div>
+
+
+
+  <script src="script.js"></script>
+</body>
+</html>
