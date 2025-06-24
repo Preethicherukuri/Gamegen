@@ -1,0 +1,387 @@
+/* === GLOBAL RESET === */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f5f5f5;
+  text-align: center;
+  overflow: hidden;
+  position: relative;
+}
+
+/* === BUTTONS === */
+button {
+  padding: 10px 20px;
+  margin: 5px;
+  font-size: 16px;
+  border-radius: 10px;
+  border: none;
+  background-color: #2196f3;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #1976d2;
+}
+
+.hidden {
+  display: none;
+}
+
+/* === SCREEN === */
+.screen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: none;
+  padding: 20px;
+  background-image: url('assets/theme-bg.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.screen:not(.hidden) {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+
+/* === THEME SELECTION SCREEN === */
+#mainMenu h1 {
+  font-size: 38px;
+  margin: 40px 0 20px;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 15px 30px;
+  border-radius: 12px;
+  color: #fff;
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7);
+  animation: fadeInDown 0.8s ease-in-out;
+}
+
+.themes {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  padding: 30px;
+  max-width: 1000px;
+}
+
+/* Individual theme card */
+.theme-card {
+  width: 300px;
+  height: 420px;
+  background-size: cover;
+  background-position: center;
+  border-radius: 20px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+  position: relative;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+  backdrop-filter: blur(5px);
+}
+
+.theme-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6);
+}
+
+.theme-card .label {
+  width: 100%;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  font-size: 22px;
+  font-weight: bold;
+  padding: 15px 0;
+  border-radius: 0 0 20px 20px;
+}
+
+/* Theme backgrounds */
+#harry {
+  background-image: url('assets/harry.jpg');
+}
+
+#twilight {
+  background-image: url('assets/twilight.jpg');
+}
+
+#hunger {
+  background-image: url('assets/hunger.jpg');
+}
+
+/* === GAME UI === */
+#gameUI {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 30px;
+  background-image: url('assets/theme-bg.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 2;
+}
+
+#gameUI:not(.hidden) {
+  display: flex;
+}
+
+.top-bar, .bottom-bar {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  max-width: 600px;
+  margin: 10px auto;
+  font-size: 18px;
+  background: rgba(255, 255, 255, 0.85);
+  padding: 10px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+/* Game grid */
+#gameBoard {
+  display: grid;
+  grid-template-columns: repeat(6, 60px);
+  gap: 8px;
+  margin: 20px 0;
+  justify-content: center;
+}
+
+.tile {
+  width: 60px;
+  height: 60px;
+  background-color: #fff;
+  font-size: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  border: 2px solid #ccc;
+  border-radius: 10px;
+  user-select: none;
+  transition: transform 0.2s ease;
+}
+
+.tile:hover {
+  transform: scale(1.05);
+}
+
+.tile.highlight {
+  outline: 3px solid #fbc02d;
+}
+
+/* === BOOSTER + END BUTTONS === */
+#endButtons {
+  margin-top: 20px;
+}
+
+/* === LEVEL SELECT SCREEN === */
+#levelSelect h1 {
+  font-size: 32px;
+  margin: 30px 0 10px;
+  color: #fff;
+  text-shadow: 1px 1px 4px #000;
+  background-color: rgba(0,0,0,0.4);
+  padding: 10px 25px;
+  border-radius: 10px;
+}
+
+#levelsGrid {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  gap: 10px;
+  margin: 20px auto;
+  max-width: 800px;
+}
+
+.level-btn {
+  padding: 20px;
+  font-size: 14px;
+  border-radius: 8px;
+  background-color: #eee;
+  border: 2px solid #ccc;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.level-btn.locked {
+  background-color: #ccc;
+  color: #999;
+  cursor: not-allowed;
+}
+
+.level-btn.unlocked {
+  background-color: #4caf50;
+  color: white;
+}
+
+.level-btn.unlocked:hover {
+  background-color: #388e3c;
+}
+
+/* === PRE-GAME GOAL SCREEN === */
+#preGameMessage {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  min-height: 100vh;
+  background-image: url('assets/theme-bg.png');
+  background-size: cover;
+  background-position: center;
+  padding: 20px;
+}
+
+#preGameMessage h1 {
+  font-size: 38px;
+  color: #fff;
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: 20px 40px;
+  border-radius: 15px;
+  margin-bottom: 20px;
+  text-shadow: 2px 2px 6px #000;
+  animation: fadeInUp 0.8s ease-in-out;
+}
+
+#preGameMessage p {
+  font-size: 24px;
+  color: #fff;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 15px 25px;
+  border-radius: 12px;
+  margin: 10px 0;
+  width: 80%;
+  max-width: 600px;
+  text-shadow: 1px 1px 4px #000;
+  line-height: 1.6;
+  animation: fadeInUp 0.8s ease-in-out;
+}
+
+/* === ANIMATIONS === */
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* === MOBILE TWEAKS === */
+@media (max-width: 768px) {
+  .themes {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .theme-card {
+    width: 90%;
+    height: 240px;
+  }
+
+  #mainMenu h1 {
+    font-size: 28px;
+  }
+
+  #levelsGrid {
+    grid-template-columns: repeat(5, 1fr);
+  }
+
+  #gameBoard {
+    grid-template-columns: repeat(6, 40px);
+  }
+
+  .tile {
+    width: 40px;
+    height: 40px;
+    font-size: 22px;
+  }
+}
+
+/* === BONUS GOAL PROMPT === */
+#bonusPrompt {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(255, 255, 255, 0.95);
+  border: 3px solid #4caf50;
+  padding: 30px 40px;
+  border-radius: 20px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+  z-index: 999;
+  text-align: center;
+  width: 90%;
+  max-width: 400px;
+  display: none;
+  animation: fadeInPop 0.4s ease-in-out;
+}
+
+#bonusPrompt p {
+  margin-bottom: 20px;
+  font-size: 20px;
+  font-weight: 600;
+  color: #333;
+}
+
+#bonusPrompt .bonus-subtext {
+  font-size: 16px;
+  font-weight: 400;
+  color: #666;
+}
+
+.bonus-btn {
+  padding: 10px 20px;
+  margin: 10px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  background-color: #4caf50;
+  color: white;
+  transition: background-color 0.3s ease;
+}
+
+.bonus-btn:hover {
+  background-color: #388e3c;
+}
+
+/* === BONUS ANIMATION === */
+@keyframes fadeInPop {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}

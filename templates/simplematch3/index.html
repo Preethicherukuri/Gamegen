@@ -1,1 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Simple Match-3 Game</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
 
+  <!-- 🎯 Theme Selection Screen -->
+  <div id="mainMenu" class="screen">
+    <h1>Select a Theme</h1>
+    <div class="themes">
+      <div class="theme-card" id="harry">
+        <div class="label">Harry Potter</div>
+      </div>
+      <div class="theme-card" id="twilight">
+        <div class="label">Twilight</div>
+      </div>
+      <div class="theme-card" id="hunger">
+        <div class="label">Hunger Games</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 🔓 Level Select Screen -->
+  <div id="levelSelect" class="screen hidden">
+    <h1>Select a Level</h1>
+    <div id="levelsGrid"></div>
+    <button onclick="goBackToThemes()">Back to Themes</button>
+  </div>
+
+  <!-- ⚔️ Pre-Game Goal Message -->
+  <div id="preGameMessage" class="screen hidden">
+    <h1>Level <span id="preLevelNumber">1</span></h1>
+    <p>🎯 Goal: Match <span id="preGoalPoints">100</span> points</p>
+    <p>🕹️ Moves Allowed: <span id="preMoveLimit">20</span></p>
+    <p>Press any key to begin...</p>
+  </div>
+
+  <!-- 🎮 Game UI -->
+  <div id="gameUI" class="screen hidden">
+    <div class="top-bar">
+      <div>Score: <span id="score">0</span></div>
+      <div>Goal: <span id="goal">100</span></div>
+      <div>Moves: <span id="moves">20</span></div>
+    </div>
+
+    <div id="gameBoard"></div>
+
+    <div class="bottom-bar">
+      <div>Level: <span id="level">1</span></div>
+      <div>Coins: <span id="coins">0</span></div>
+      <div>💡 Hints: <span id="boosters">0</span></div>
+    </div>
+
+    <button id="boosterBtn">Use Hint 💡</button>
+
+    <!-- 🎯 Bonus Goal Prompt -->
+    <div id="bonusPrompt" class="hidden bonus-container">
+      <p class="bonus-text">🎯 You’ve reached the primary goal!</p>
+      <p class="bonus-subtext">
+        Do you want to continue for a bonus reward?<br>
+        🎯 Bonus Goal: <span id="bonusGoalText">160</span> points<br>
+        🎁 Reward: 1 extra hint 💡
+      </p>
+      <button id="bonusContinueBtn" class="bonus-btn">Continue</button>
+      <button id="bonusNextBtn" class="bonus-btn">Next Level</button>
+    </div>
+
+    <!-- 🎉 End Game Buttons -->
+    <div id="endButtons" class="hidden">
+      <button onclick="tryAgain()">Try Again</button>
+      <button onclick="nextLevel()">Next Level</button>
+      <button onclick="restartProgress()">Restart Progress</button>
+      <button onclick="goHome()">Home</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
