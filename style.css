@@ -1,60 +1,86 @@
+/* 🔵 Global Styles */
 body {
   margin: 0;
   font-family: 'Segoe UI', sans-serif;
-  background: linear-gradient(to bottom, #1e3c72, #2a5298);
+  background: linear-gradient(145deg, #0f2027, #203a43, #2c5364);
   color: #fff;
   overflow: hidden;
   height: 100vh;
   width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
+/* 🏠 Home Screen Container */
 .container {
   text-align: center;
-  padding-top: 60px;
+  padding: 40px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 20px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(10px);
+  max-width: 90%;
+  width: 700px;
+  animation: floatIn 1.2s ease-out forwards;
 }
 
+/* 🎮 Title */
 .title {
-  font-size: 48px;
+  font-size: 60px;
+  margin-bottom: 10px;
+  background: linear-gradient(to right, #ffe600, #ff9900);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
   animation: pulse 2s infinite;
 }
 
+/* 📝 Subtitle */
 .subtitle {
-  font-size: 20px;
-  margin-bottom: 30px;
-  color: #ccc;
+  font-size: 22px;
+  margin-bottom: 40px;
+  color: #d0d0d0;
+  font-style: italic;
 }
 
+/* 🎯 Game Buttons */
 .button-group {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  gap: 20px;
+  gap: 25px;
 }
 
 .button-group button {
-  padding: 16px 32px;
+  padding: 18px 36px;
   font-size: 20px;
   border: none;
-  border-radius: 12px;
-  background-color: #ffce00;
+  border-radius: 15px;
+  background: linear-gradient(to right, #ffe600, #ff9900);
   color: #000;
   font-weight: bold;
   cursor: pointer;
-  box-shadow: 0 6px 20px rgba(255, 206, 0, 0.5);
-  transition: transform 0.2s;
+  box-shadow: 0 8px 24px rgba(255, 206, 0, 0.6);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .button-group button:hover {
-  transform: scale(1.05);
+  transform: scale(1.08);
+  box-shadow: 0 12px 28px rgba(255, 206, 0, 0.9);
 }
 
+/* 🖥️ Game Screen */
 .fullscreen {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
 }
 
 .fullscreen iframe {
@@ -63,26 +89,47 @@ body {
   border: none;
 }
 
+/* ⬅ Back Button */
 .back-btn {
   position: absolute;
   top: 20px;
   left: 20px;
-  background: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.85);
   color: #000;
   border: none;
   font-size: 18px;
-  padding: 8px 16px;
-  border-radius: 10px;
+  padding: 10px 20px;
+  border-radius: 12px;
   cursor: pointer;
-  z-index: 10;
+  font-weight: bold;
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.3);
+  transition: background 0.2s;
+  z-index: 1010;
 }
 
+.back-btn:hover {
+  background: #fff;
+}
+
+/* 🚫 Hidden Elements */
 .hidden {
   display: none;
 }
 
+/* ✨ Animations */
 @keyframes pulse {
   0% { transform: scale(1); opacity: 1; }
   50% { transform: scale(1.03); opacity: 0.9; }
   100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes floatIn {
+  from {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }

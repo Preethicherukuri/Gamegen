@@ -4,6 +4,14 @@ const emojiThemes = {
   hunger: ['🏹', '🔥', '🍞', '🐦', '🎯', '👧']
 };
 
+// 🎵 Sound effects
+const soundHarry = new Audio('sounds/harry.mp3');
+const soundTwilight = new Audio('sounds/twilight.mp3');
+const soundHunger = new Audio('sounds/hunger.mp3');
+const soundSwap = new Audio('sounds/swap.mp3');
+const soundScore = new Audio('sounds/score.mp3');
+const soundGoal = new Audio('sounds/goal.mp3');
+
 let board = [];
 let selectedTheme = '';
 let currentLevel = 1;
@@ -45,9 +53,16 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.theme-card').forEach(card => {
     card.addEventListener('click', () => {
       selectedTheme = card.id;
+
+      // 🔉 Play theme sound
+      if (selectedTheme === 'harry') soundHarry.play();
+      else if (selectedTheme === 'twilight') soundTwilight.play();
+      else if (selectedTheme === 'hunger') soundHunger.play();
+
       showLevels();
     });
   });
+
 
   boosterBtn.addEventListener('click', useBooster);
   bonusContinueBtn.addEventListener('click', () => {
@@ -108,6 +123,15 @@ function showPreGame() {
   showScreen('preGameMessage');
 
   const keyListener = () => {
+    // ⏹️ Stop any theme music
+    soundHarry.pause();
+    soundTwilight.pause();
+    soundHunger.pause();
+
+    soundHarry.currentTime = 0;
+    soundTwilight.currentTime = 0;
+    soundHunger.currentTime = 0;
+
     document.removeEventListener('keydown', keyListener);
     requestAnimationFrame(() => {
       startGame();
@@ -116,6 +140,7 @@ function showPreGame() {
 
   document.addEventListener('keydown', keyListener);
 }
+
 
 function startGame() {
   isGameOver = false;
@@ -188,14 +213,19 @@ function swapTiles(i1, i2) {
   const tmp = board[i1].innerText;
   board[i1].innerText = board[i2].innerText;
   board[i2].innerText = tmp;
+
+  soundSwap.play(); // 🔉 play on swap
+
   moves--;
   checkMatches();
   updateStatus();
 }
 
+
 function checkMatches() {
   const matched = new Set();
 
+  // Initial horizontal matches
   for (let row = 0; row < boardSize; row++) {
     for (let col = 0; col <= boardSize - 3; col++) {
       const i = row * boardSize + col;
@@ -209,6 +239,7 @@ function checkMatches() {
     }
   }
 
+  // Initial vertical matches
   for (let col = 0; col < boardSize; col++) {
     for (let row = 0; row <= boardSize - 3; row++) {
       const i = row * boardSize + col;
@@ -225,7 +256,7 @@ function checkMatches() {
   if (matched.size > 0) {
     const matchGroups = new Set();
 
-    // Detect horizontal matches
+    // Detect horizontal groups again for score calculation
     for (let row = 0; row < boardSize; row++) {
       for (let col = 0; col <= boardSize - 3; col++) {
         const i = row * boardSize + col;
@@ -240,7 +271,7 @@ function checkMatches() {
       }
     }
 
-    // Detect vertical matches
+    // Detect vertical groups again for score calculation
     for (let col = 0; col < boardSize; col++) {
       for (let row = 0; row <= boardSize - 3; row++) {
         const i = row * boardSize + col;
@@ -257,12 +288,15 @@ function checkMatches() {
 
     score += matchGroups.size * 30;
 
+    if (matchGroups.size > 0) {
+      soundScore.play(); // 🔉 Play score sound
+    }
+
     matched.forEach(i => board[i].innerText = '');
     dropEmojis();
     refillBoard();
     setTimeout(checkMatches, 300);
   }
-
 
   updateStatus();
 
@@ -272,10 +306,10 @@ function checkMatches() {
     coins += 50;
     updateLocalStorage();
     updateStatus();
+    soundGoal.play(); // 🔉 play on reaching goal
     document.getElementById('bonusGoalText').innerText = bonusGoal;
     bonusPrompt.style.display = 'block';
   }
-
 
   if (hasWonLevel && score >= bonusGoal && !bonusEarned) {
     bonusEarned = true;
@@ -285,13 +319,13 @@ function checkMatches() {
     gameOver(); // ✅ already added before
   }
 
-
   if (moves <= 0 && (hasWonLevel || allowBonusPlay)) {
     gameOver();
   } else if (!hasWonLevel && moves <= 0) {
     gameOver();
   }
 }
+
 
 function dropEmojis() {
   for (let col = 0; col < boardSize; col++) {
