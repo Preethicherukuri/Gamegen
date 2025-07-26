@@ -49,19 +49,34 @@ A multi-theme puzzle game where players match emojis in a grid to meet score goa
 ## 🗂️ Project Structure
 
 GameGen/
+├── index.html
+├── style.css
+├── app.js
+│
 ├── flappy-bird/
 │   ├── index.html
 │   ├── style.css
-│   └── game1.js
+│   ├── script.js
+│   └── assets/
+│       ├── backgrounds/ 
+│       └── sounds/
+│
 ├── whack-a-mole/
 │   ├── index.html
 │   ├── style.css
-│   └── script.js
-├── match-3/
+│   ├── script.js
+│   ├── images/
+│   └── audio/   
+│       
+│
+├── simplematch3/ 
 │   ├── index.html
 │   ├── style.css
-│   └── script.js
-└── index.html          # Optional shared images, sounds
+│   ├── script.js
+│   ├── assets/
+│   └── sounds/
+      
+
 
 ---
 
