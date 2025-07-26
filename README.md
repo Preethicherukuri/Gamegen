@@ -9,16 +9,17 @@
 ### 1. 🐦 Flappy Bird Clone
 A smooth, side-scrolling arcade-style game where players navigate a bird through pipes using click or spacebar mechanics.
 
-- Physics-based movement and gravity
-- Dynamic obstacle generation
-- Score tracking and reset logic
+- Select from different **seasons** (e.g., Summer, Winter, Monsoon, Spring).
+- Choose **difficulty levels**: Easy, Medium, or Hard.
+- Gameplay mechanics change based on difficulty level (speed, gravity, etc.).
 
 ### 2. 🪐 Whack-a-Mole: Planet Quest
 A cosmic twist on the classic whack-a-mole game — with progressive levels mapped across eight planets.
 
-- 10 levels per planet, with increasing difficulty
-- Game completion options: Try Again, Next Level, Restart, Home
-- Sound effects and local storage for progress tracking
+- Tap the moles before they disappear.
+- Each level has a score **goal** you must reach.
+- Unlock the **next level** only after completing the current one.
+- Levels get harder with faster and trickier mole movements.
 
 ### 3. ✨ Simple Match-3
 A multi-theme puzzle game where players match emojis in a grid to meet score goals within limited moves.
