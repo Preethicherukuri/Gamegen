@@ -48,6 +48,20 @@ A multi-theme puzzle game where players match emojis in a grid to meet score goa
 
 ## 🗂️ Project Structure
 
+GameGen/
+├── flappy-bird/
+│   ├── index.html
+│   ├── style.css
+│   └── game1.js
+├── whack-a-mole/
+│   ├── index.html
+│   ├── style.css
+│   └── script.js
+├── match-3/
+│   ├── index.html
+│   ├── style.css
+│   └── script.js
+└── index.html          # Optional shared images, sounds
 
 ---
 
@@ -56,3 +70,17 @@ A multi-theme puzzle game where players match emojis in a grid to meet score goa
 1. **Clone the repository**  
    ```bash
    git clone https://github.com/yourusername/GameGen.git
+2. **Navigate to any game folder**
+   ```bash
+   cd GameGen/flappy-bird
+3. **Open `index.html` in your browser.**
+
+No build tools or frameworks required — everything runs client-side.
+
+---
+
+## 💬 Feedback
+
+If you have suggestions for improvements or want to contribute more templates, feel free to open an issue or fork the repo!
+
+---
