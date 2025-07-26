@@ -48,7 +48,7 @@ A multi-theme puzzle game where players match emojis in a grid to meet score goa
 ---
 
 ## 🗂️ Project Structure
-
+```
 GameGen/
 ├── index.html
 ├── style.css
@@ -76,7 +76,8 @@ GameGen/
 │   ├── script.js
 │   ├── assets/
 │   └── sounds/
-      
+
+``` 
 
 
 ---
