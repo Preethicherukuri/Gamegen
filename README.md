@@ -4,7 +4,7 @@
 
 ---
 
-## 🚀 Included Game Templates
+## Included Game Templates
 
 ### 1. 🐦 Flappy Bird Clone
 A smooth, side-scrolling arcade-style game where players navigate a bird through pipes using click or spacebar mechanics.
@@ -30,7 +30,7 @@ A multi-theme puzzle game where players match emojis in a grid to meet score goa
 
 ---
 
-## 🧱 Tech Stack
+##  Tech Stack
 
 - **Frontend**: HTML5, CSS3, JavaScript (Vanilla)
 - **UI/UX**: DOM animations, responsive layouts, thematic visuals
@@ -38,7 +38,7 @@ A multi-theme puzzle game where players match emojis in a grid to meet score goa
 
 ---
 
-## 🎯 Highlights
+##  Highlights
 
 - Fully functional templates ready for integration or customization
 - Modular code structure to support feature expansion
@@ -82,7 +82,7 @@ GameGen/
 
 ---
 
-## 📌 How to Use
+##  How to Use
 
 1. **Clone the repository**  
    ```bash
